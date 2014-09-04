@@ -30,7 +30,7 @@
 
   <groupId>org.fusesource.restygwt</groupId>
   <artifactId>restygwt-project</artifactId>
-  <version>1.5-SNAPSHOT</version>
+  <version>1.5-ieefd564</version>
   <packaging>pom</packaging>
   
   <name>${project.artifactId}</name>
@@ -74,10 +74,17 @@
     <url>http://github.com/chirino/resty-gwt</url>
   </scm>
   <distributionManagement>
+    <repository>
+      <id>maven.intendia.com</id>
+      <url>http://maven.intendia.com/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven.intendia.com</id>
+      <url>http://maven.intendia.com/libs-snapshot-local</url>
+    </snapshotRepository>
     <site>
-      <id>website.fusesource.org</id>
-      <name>website</name>
-      <url>dav:http://fusesource.com/forge/dav/${forge-project-id}/versions/${project.version}/maven</url>
+      <id>doc.intendia.com</id>
+      <url>http://doc.intendia.com/igestion</url>
     </site>
   </distributionManagement>
   
