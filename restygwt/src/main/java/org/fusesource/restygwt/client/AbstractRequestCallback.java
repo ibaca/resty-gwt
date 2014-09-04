@@ -44,6 +44,14 @@ public abstract class AbstractRequestCallback<T> implements RequestCallback {
         this.callback = callback;
     }
 
+    public MethodCallback<T> getCallback() {
+        return callback;
+    }
+
+    public void setCallback(MethodCallback<T> callback) {
+        this.callback = callback;
+    }
+
     @Override
     final public void onError(Request request, Throwable exception) {
         this.method.request = request;
