@@ -26,7 +26,7 @@
   <parent>
     <groupId>org.fusesource.restygwt</groupId>
     <artifactId>restygwt-project</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5-ae1d096</version>
     <relativePath>..</relativePath>
   </parent>
 
