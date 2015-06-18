@@ -41,12 +41,10 @@ class DummyJField implements JField {
         return annotations.containsKey(annotationClass);
     }
 
-    @Override
     public String[][] getMetaData(String tagName) {
         return null;
     }
 
-    @Override
     public String[] getMetaDataTags() {
         return null;
     }

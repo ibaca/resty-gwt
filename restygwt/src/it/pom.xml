@@ -28,56 +28,56 @@
   <packaging>pom</packaging>
 
   <name>RestyGWT Parent for ITs</name>
-  
+
   <description>
     RestyGWT Parent POM for integration tests
   </description>
-<!--
-  <pluginRepositories>
-    <pluginRepository>
-      <id>hiramchirino.com-release</id>
-      <url>http://hiramchirino.com/repo/release</url>
-      <releases><enabled>true</enabled></releases>
-      <snapshots><enabled>false</enabled></snapshots>
-    </pluginRepository>
-  </pluginRepositories>
+  <!--
+    <pluginRepositories>
+      <pluginRepository>
+        <id>hiramchirino.com-release</id>
+        <url>http://hiramchirino.com/repo/release</url>
+        <releases><enabled>true</enabled></releases>
+        <snapshots><enabled>false</enabled></snapshots>
+      </pluginRepository>
+    </pluginRepositories>
 
-  <repositories>
-    <repository>
-      <id>hiramchirino.com-release</id>
-      <url>http://hiramchirino.com/repo/release</url>
-      <releases><enabled>true</enabled></releases>
-      <snapshots><enabled>false</enabled></snapshots>
-    </repository>
-    <repository>
-      <id>java.net.m2</id>
-      <url>http://download.java.net/maven/2</url>
-    </repository>
-    <repository>
-      <id>java.net.m1</id>
-      <url>http://download.java.net/maven/1</url>
-      <layout>legacy</layout>
-    </repository>
-  </repositories>
--->
+    <repositories>
+      <repository>
+        <id>hiramchirino.com-release</id>
+        <url>http://hiramchirino.com/repo/release</url>
+        <releases><enabled>true</enabled></releases>
+        <snapshots><enabled>false</enabled></snapshots>
+      </repository>
+      <repository>
+        <id>java.net.m2</id>
+        <url>http://download.java.net/maven/2</url>
+      </repository>
+      <repository>
+        <id>java.net.m1</id>
+        <url>http://download.java.net/maven/1</url>
+        <layout>legacy</layout>
+      </repository>
+    </repositories>
+  -->
   <properties>
     <gwt-version>@gwt-version@</gwt-version>
   </properties>
 
   <dependencies>
-  
+
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
       <version>${gwt-version}</version>
-      <scope>provided</scope>      
-    </dependency> 
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-dev</artifactId>
       <version>${gwt-version}</version>
-      <scope>test</scope>      
-    </dependency>     
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.fusesource.restygwt</groupId>
       <artifactId>restygwt</artifactId>
@@ -96,7 +96,7 @@
   <build>
     <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
     <plugins>
-    
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -105,7 +105,7 @@
           <target>1.5</target>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -113,8 +113,8 @@
         <configuration>
           <warSourceDirectory>war</warSourceDirectory>
         </configuration>
-      </plugin>      
-      
+      </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
@@ -126,12 +126,12 @@
               <goal>test</goal>
             </goals>
           </execution>
-        </executions>        
+        </executions>
         <configuration>
           <gen>${project.build.directory}</gen>
           <logLevel>INFO</logLevel>
           <style>DETAILED</style>
-          <treeLogger>true</treeLogger>
+          <jsInteropMode>JS</jsInteropMode>
           <extraJvmArgs>-Xmx512m</extraJvmArgs>
           <runTarget>ui/ui.html</runTarget>
           <includes>**/RestyGWTTestSuite.java</includes>
@@ -139,7 +139,7 @@
           <gen>${project.build.directory}/target/generated-sources/gwt</gen>
         </configuration>
       </plugin>
-      
+
     </plugins>
   </build>
 </project>

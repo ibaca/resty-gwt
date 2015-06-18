@@ -283,7 +283,7 @@ public class Method {
         }
     }
 
-    public <T extends JavaScriptObject> Object send(final OverlayCallback<T> callback) {
+    public <T> Object send(final OverlayCallback<T> callback) {
 
 
         defaultAcceptType(Resource.CONTENT_TYPE_JSON);

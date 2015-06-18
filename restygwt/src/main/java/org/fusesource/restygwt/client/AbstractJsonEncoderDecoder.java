@@ -441,7 +441,7 @@ abstract public class AbstractJsonEncoderDecoder<T> implements JsonEncoderDecode
         return rc;
     }
 
-    static public <Type> Type[] toArray(JSONValue value, AbstractJsonEncoderDecoder<Type> encoder, Type[] template) {
+    static public <Type> Type[] toArray(JSONValue value, AbstractJsonEncoderDecoder<? extends Type> encoder, Type[] template) {
         if (value == null || value.isNull() != null) {
             return null;
         }

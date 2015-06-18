@@ -1,8 +1,6 @@
 package org.fusesource.restygwt.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
-public final class OverlayMethodCallback<T extends JavaScriptObject> implements OverlayCallback<T> {
+public final class OverlayMethodCallback<T> implements OverlayCallback<T> {
     private final MethodCallback<T> adaptee;
 
     public OverlayMethodCallback(MethodCallback<T> adaptee) {

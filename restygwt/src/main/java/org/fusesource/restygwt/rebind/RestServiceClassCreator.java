@@ -47,6 +47,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import com.google.gwt.core.client.js.JsType;
 import org.fusesource.restygwt.client.AbstractAsyncCallback;
 import org.fusesource.restygwt.client.AbstractRequestCallback;
 import org.fusesource.restygwt.client.Attribute;
@@ -615,9 +616,12 @@ public class RestServiceClassCreator extends BaseSourceCreator {
                 } else if (contentArg.getType().isClass() != null &&
                            isOverlayArrayType(contentArg.getType().isClass())) {
                     p("__method.json(new " + JSON_ARRAY_CLASS + "(" + contentArg.getName() + "));");
-                } else if (contentArg.getType().isClass() != null &&
-                           contentArg.getType().isClass().isAssignableTo(OVERLAY_VALUE_TYPE)) {
-                    p("__method.json(new " + JSON_OBJECT_CLASS + "(" + contentArg.getName() + "));");
+                } else if ((contentArg.getType().isClass() != null &&
+                            contentArg.getType().isClass().isAssignableTo(OVERLAY_VALUE_TYPE))
+                        || (contentArg.getType().isInterface() != null &&
+                            contentArg.getType().isInterface().isAnnotationPresent(JsType.class))) {
+                    p("__method.json(new " + JSON_OBJECT_CLASS + "(" +
+                            "(com.google.gwt.core.client.JavaScriptObject) " + contentArg.getName() + "));");
                 } else if (contentArg.getType() == DOCUMENT_TYPE) {
                     p("__method.xml(" + contentArg.getName() + ");");
                 } else {

@@ -18,13 +18,11 @@
 package org.fusesource.restygwt.rebind;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
-import com.google.gwt.core.ext.typeinfo.JClassType;
-import com.google.gwt.core.ext.typeinfo.JGenericType;
-import com.google.gwt.core.ext.typeinfo.JMethod;
-import com.google.gwt.core.ext.typeinfo.JTypeParameter;
+import com.google.gwt.core.ext.typeinfo.*;
 import com.google.gwt.user.rebind.ClassSourceFileComposerFactory;
 
 /**
@@ -94,6 +92,9 @@ public abstract class DirectRestBaseSourceCreator extends BaseSourceCreator {
     }
 
     protected boolean isOverlayMethod(JMethod method) {
-        return OVERLAY_VALUE_TYPE.isAssignableFrom(method.getReturnType().isClass());
+        final JType type = method.getReturnType();
+        if (type.isClass() != null && OVERLAY_VALUE_TYPE.isAssignableFrom(type.isClass())) return true;
+        if (type.isInterface() != null && type.isInterface().isAnnotationPresent(JsType.class)) return true;
+        return false;
     }
 }

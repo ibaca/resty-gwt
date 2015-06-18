@@ -24,5 +24,5 @@ import com.google.gwt.core.client.JavaScriptObject;
  * Callback for GWT Overlay Types.
  * @author iteratee@google.com (Kyle Butt)
  */
-public interface OverlayCallback<T extends JavaScriptObject> extends MethodCallback<T> {
+public interface OverlayCallback<T> extends MethodCallback<T> {
 }

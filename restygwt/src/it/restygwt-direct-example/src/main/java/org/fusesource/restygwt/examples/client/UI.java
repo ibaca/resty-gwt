@@ -18,7 +18,10 @@
 
 package org.fusesource.restygwt.examples.client;
 
-import org.fusesource.restygwt.client.JsonCallback;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.text.shared.AbstractRenderer;
+import com.google.gwt.text.shared.Renderer;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.OverlayCallback;
 import org.fusesource.restygwt.client.REST;
@@ -30,8 +33,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
@@ -49,56 +50,59 @@ public class UI implements EntryPoint {
      * This is the entry point method.
      */
     public void onModuleLoad() {
-        Button button = new Button("Get Greeting");
-        button.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                getGreeting();
-            }
-        });
-        RootPanel.get().add(button);
         RootPanel.get().add(new Label("Name:"));
         final TextBox nameInput = new TextBox();
         RootPanel.get().add(nameInput);
-        Button customButton = new Button("Get Custom Greeting");
-        customButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+        nameInput.addValueChangeHandler(new ValueChangeHandler<String>() {
+            @Override
+            public void onValueChange(ValueChangeEvent<String> event) {
                 getCustomGreeting(nameInput.getValue());
             }
         });
-        RootPanel.get().add(customButton);
-    }
-
-    private void getGreeting() {
-        GreetingService service = GWT.create(GreetingService.class);
-        Resource resource = new Resource(GWT.getModuleBaseURL() + "greeting-service");
-        ((RestServiceProxy) service).setResource(resource);
-
-        REST.withCallback(new OverlayCallback<Greeting>() {
-            public void onSuccess(Method method, Greeting greeting) {
-                RootPanel.get().add(new Label("server said: " + greeting.getGreeting()));
-            }
-
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert("Error: " + exception);
-            }
-        }).call(service).getGreeting();
+        nameInput.setValue("ping", true);
     }
 
     private void getCustomGreeting(String name) {
         GreetingService service = GWT.create(GreetingService.class);
         Resource resource = new Resource(GWT.getModuleBaseURL() + "greeting-service");
         ((RestServiceProxy) service).setResource(resource);
-        NameObject arg = (NameObject) JavaScriptObject.createObject();
-        arg.setName(name);
 
-        REST.withCallback(new OverlayCallback<Greeting>() {
-            public void onSuccess(Method method, Greeting greeting) {
-                RootPanel.get().add(new Label("server said: " + greeting.getGreeting()));
+        Overlay overlay = (Overlay) JavaScriptObject.createObject();
+        overlay.setStr(name);
+        getCall(service, "overlays", new AbstractRenderer<Overlay>() {
+            public String render(Overlay object) {
+                return object.getStr();
+            }
+        }).overlay(overlay);
+
+        Interop interop = createInterop();
+        interop.setStr(name);
+        getCall(service, "interop", new AbstractRenderer<Interop>() {
+            public String render(Interop object) {
+                return object.getStr();
+            }
+        }).interop(interop);
+
+        Pojo pojo = new Pojo();
+        pojo.setStr(name);
+        getCall(service, "pojo", new AbstractRenderer<Pojo>() {
+            public String render(Pojo object) {
+                return object.getStr();
+            }
+        }).pojo(pojo);
+    }
+
+    private <T> GreetingService getCall(GreetingService service, final String container, final Renderer<T> render) {
+        return REST.withCallback(new OverlayCallback<T>() {
+            public void onSuccess(Method method, T greeting) {
+                RootPanel.get().add(new Label("server said using " + container + ": " +  render.render(greeting)));
             }
 
             public void onFailure(Method method, Throwable exception) {
                 Window.alert("Error: " + exception);
             }
-        }).call(service).getCustomGreeting(arg);
+        }).call(service);
     }
+
+    static  native Interop createInterop() /*-{ return {}; }-*/;
 }

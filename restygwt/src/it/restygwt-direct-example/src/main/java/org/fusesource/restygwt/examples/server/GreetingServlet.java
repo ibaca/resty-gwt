@@ -66,11 +66,11 @@ public class GreetingServlet extends HttpServlet {
         try {
             ObjectMapper mapper = new ObjectMapper();
             ObjectNode nameObject = mapper.readValue(req.getInputStream(), ObjectNode.class);
-            String name = nameObject.get("name").asText();
+            String name = nameObject.get("str").asText();
 
             String greeting = "Hello " + name;
             ObjectNode resultObject = new ObjectNode(JsonNodeFactory.instance);
-            resultObject.put("greeting", greeting);
+            resultObject.put("str", greeting);
             mapper.writeValue(resp.getOutputStream(), resultObject);
         } catch (Throwable e) {
             e.printStackTrace();
