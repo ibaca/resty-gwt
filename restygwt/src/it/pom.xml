@@ -94,7 +94,7 @@
   </dependencies>
 
   <build>
-    <outputDirectory>${basedir}/war/WEB-INF/classes</outputDirectory>
+    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
     <plugins>
     
       <plugin>
@@ -136,31 +136,10 @@
           <runTarget>ui/ui.html</runTarget>
           <includes>**/RestyGWTTestSuite.java</includes>
           <!-- <gwtHome>${env.GWT_HOME}</gwtHome> -->
+          <gen>${project.build.directory}/target/generated-sources/gwt</gen>
         </configuration>
       </plugin>
       
     </plugins>
   </build>
-  
-  <profiles>
-    <!-- Macs need the -d32 -XstartOnFirstThread options -->
-    <profile>
-      <id>mac</id>
-      <activation>
-        <os><family>mac</family></os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>gwt-maven-plugin</artifactId>
-            <configuration>
-              <extraJvmArgs>-d32 -XstartOnFirstThread -Xmx512m</extraJvmArgs>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>    
-  </profiles>  
-  
 </project>
